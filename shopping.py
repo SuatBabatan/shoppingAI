@@ -63,8 +63,8 @@ def load_data(filename):
     labels = []
     with open(filename) as file:
         dictreader = csv.DictReader(file)
-        tmp_evidence = []
         for user in dictreader:
+            tmp_evidence = []
             tmp_evidence += [int(user["Administrative"])]
             tmp_evidence += [float(user["Administrative_Duration"])]
             tmp_evidence += [int(user["Informational"])]
