@@ -8,7 +8,6 @@ TEST_SIZE = 0.4
 
 
 def main():
-
     # Check command-line arguments
     if len(sys.argv) != 2:
         sys.exit("Usage: python shopping.py data")
@@ -59,7 +58,35 @@ def load_data(filename):
     labels should be the corresponding list of labels, where each label
     is 1 if Revenue is true, and 0 otherwise.
     """
-    raise NotImplementedError
+
+    evidence = []
+    labels = []
+    with open(filename) as file:
+        dictreader = csv.DictReader(file)
+        tmp_evidence = []
+        for user in dictreader:
+            tmp_evidence += [int(user["Administrative"])]
+            tmp_evidence += [float(user["Administrative_Duration"])]
+            tmp_evidence += [int(user["Informational"])]
+            tmp_evidence += [float(user["Informational_Duration"])]
+            tmp_evidence += [int(user["ProductRelated"])]
+            tmp_evidence += [float(user["ProductRelated_Duration"])]
+            tmp_evidence += [float(user["BounceRates"])]
+            tmp_evidence += [float(user["ExitRates"])]
+            tmp_evidence += [float(user["PageValues"])]
+            tmp_evidence += [float(user["SpecialDay"])]
+            tmp_evidence += [monthToNum(user["Month"])]
+            tmp_evidence += [int(user["OperatingSystems"])]
+            tmp_evidence += [int(user["Browser"])]
+            tmp_evidence += [int(user["Region"])]
+            tmp_evidence += [int(user["TrafficType"])]
+            tmp_evidence += [1 if user["VisitorType"] == "Returning_Visitor" else 0]
+            tmp_evidence += [1 if user["Weekend"] == "TRUE" else 0]
+
+            evidence += [tmp_evidence]
+            labels += [1 if user["Revenue"] == "TRUE" else 0]
+
+    return evidence, labels
 
 
 def train_model(evidence, labels):
@@ -86,6 +113,23 @@ def evaluate(labels, predictions):
     actual negative labels that were accurately identified.
     """
     raise NotImplementedError
+
+
+def monthToNum(shortMonth):
+    return {
+        'jan': 1,
+        'feb': 2,
+        'mar': 3,
+        'apr': 4,
+        'may': 5,
+        'june': 6,
+        'jul': 7,
+        'aug': 8,
+        'sep': 9,
+        'oct': 10,
+        'nov': 11,
+        'dec': 12
+    }[shortMonth.lower()]
 
 
 if __name__ == "__main__":
