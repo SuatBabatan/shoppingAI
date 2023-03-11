@@ -114,7 +114,26 @@ def evaluate(labels, predictions):
     representing the "true negative rate": the proportion of
     actual negative labels that were accurately identified.
     """
-    raise NotImplementedError
+
+    correct_positives = 0
+    total_positives = 0
+    correct_negatives = 0
+    total_negatives = 0
+
+    for label, prediction in zip(labels, predictions):
+        if label == 0:
+            total_negatives += 1
+            if prediction == 0:
+                correct_negatives += 1
+
+        elif label == 1:
+            total_positives += 1
+            if prediction == 1:
+                correct_positives += 1
+
+    sensitivity = correct_positives / total_positives
+    specificity = correct_negatives / total_negatives
+    return sensitivity, specificity
 
 
 def month_to_num(short_month):
@@ -122,18 +141,18 @@ def month_to_num(short_month):
     converts short month name to number
     """
     return {
-        'jan': 1,
-        'feb': 2,
-        'mar': 3,
-        'apr': 4,
-        'may': 5,
-        'june': 6,
-        'jul': 7,
-        'aug': 8,
-        'sep': 9,
-        'oct': 10,
-        'nov': 11,
-        'dec': 12
+        'jan': 0,
+        'feb': 1,
+        'mar': 2,
+        'apr': 3,
+        'may': 4,
+        'june': 5,
+        'jul': 6,
+        'aug': 7,
+        'sep': 8,
+        'oct': 9,
+        'nov': 10,
+        'dec': 11
     }[short_month.lower()]
 
 
