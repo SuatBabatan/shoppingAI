@@ -75,7 +75,7 @@ def load_data(filename):
             tmp_evidence += [float(user["ExitRates"])]
             tmp_evidence += [float(user["PageValues"])]
             tmp_evidence += [float(user["SpecialDay"])]
-            tmp_evidence += [monthToNum(user["Month"])]
+            tmp_evidence += [month_to_num(user["Month"])]
             tmp_evidence += [int(user["OperatingSystems"])]
             tmp_evidence += [int(user["Browser"])]
             tmp_evidence += [int(user["Region"])]
@@ -117,7 +117,10 @@ def evaluate(labels, predictions):
     raise NotImplementedError
 
 
-def monthToNum(shortMonth):
+def month_to_num(short_month):
+    """
+    converts short month name to number
+    """
     return {
         'jan': 1,
         'feb': 2,
@@ -131,7 +134,7 @@ def monthToNum(shortMonth):
         'oct': 10,
         'nov': 11,
         'dec': 12
-    }[shortMonth.lower()]
+    }[short_month.lower()]
 
 
 if __name__ == "__main__":
